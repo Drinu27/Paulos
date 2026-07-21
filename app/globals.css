@@ -288,12 +288,23 @@ button { font-family: inherit; }
   transition: background var(--dur-slow) var(--ease-standard),
               border-color var(--dur-slow) var(--ease-standard);
 }
-.site-nav.scrolled {
+/* The blur lives on a pseudo-element, not on .site-nav itself. backdrop-filter
+   makes its element the containing block for position:fixed descendants, which
+   would trap the mobile drawer inside the 73px-tall bar — it then only slides up
+   by the bar's height and its lower links stay on screen. */
+.site-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-hairline);
+  transition: opacity var(--dur-slow) var(--ease-standard);
 }
+.site-nav.scrolled::before { opacity: 1; }
+.site-nav.scrolled { border-bottom: 1px solid var(--border-hairline); }
 .nav-inner {
   max-width: var(--container-max);
   margin: 0 auto;
@@ -360,15 +371,25 @@ button { font-family: inherit; }
   .nav-links {
     position: fixed;
     inset: 0;
+    height: 100dvh;
     flex-direction: column;
     justify-content: center;
     gap: 28px;
     background: var(--abyss);
     transform: translateY(-100%);
-    transition: transform var(--dur-slow) var(--ease-standard);
+    /* Belt and braces: sliding out of view is the animation, but visibility is
+       what actually guarantees a closed drawer cannot be seen, tapped or
+       reached by keyboard. Delayed so the slide finishes first. */
+    visibility: hidden;
+    transition: transform var(--dur-slow) var(--ease-standard),
+                visibility 0s linear var(--dur-slow);
     z-index: 90;
   }
-  .nav-links.open { transform: translateY(0); }
+  .nav-links.open {
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform var(--dur-slow) var(--ease-standard), visibility 0s;
+  }
   .nav-link { font-size: 1.5rem; letter-spacing: 3px; }
   .nav-cta-desktop { display: none; }
 }
