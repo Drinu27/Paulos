@@ -48,8 +48,8 @@ export default function SiteNav() {
             className="brand-logo"
             src="/images/logo.png"
             alt="Paulos"
-            width={420}
-            height={226}
+            width={480}
+            height={251}
             priority
           />
         </Link>

@@ -197,10 +197,12 @@ button { font-family: inherit; }
   letter-spacing: -0.5px;
   margin: 0;
 }
+/* Lower bound is set so "Good Food." still fits one line on a 375px phone —
+   at 3.25rem it broke into four lines. */
 .display--hero {
   font-family: var(--font-hero);
   font-weight: var(--w-black);
-  font-size: clamp(3.25rem, 11vw, 9.5rem);
+  font-size: clamp(2.75rem, 11vw, 9.5rem);
 }
 .display--lg { font-size: clamp(2.25rem, 5.5vw, 4.25rem); }
 .display--md { font-size: clamp(1.75rem, 3.5vw, 2.75rem); }
@@ -308,12 +310,11 @@ button { font-family: inherit; }
   position: relative;
   z-index: 95;
 }
-/* Logo is a gold wordmark on solid black — screen blend knocks the black out */
+/* Logo has a real alpha channel, so it sits cleanly on photographs too */
 .brand-logo {
   width: 120px;
   height: auto;
   display: block;
-  mix-blend-mode: screen;
   flex-shrink: 0;
 }
 .footer-col .brand-logo { width: 140px; }
@@ -445,7 +446,20 @@ button { font-family: inherit; }
 }
 .hero-meta .open-late { color: var(--gold); }
 .hero-hours { display: block; text-align: left; line-height: 2; }
-@media (max-width: 720px) { .hero-meta { display: none; } }
+
+/* Opening hours are the main thing a phone visitor is looking for, so they move
+   to the bottom-left rather than being hidden. */
+@media (max-width: 720px) {
+  .hero-meta {
+    right: auto;
+    left: 32px;
+    bottom: 28px;
+    align-items: flex-start;
+    text-align: left;
+    gap: 8px;
+  }
+  .hero-hours { line-height: 1.75; font-size: 11px; }
+}
 
 /* ============================================================
    MARQUEE
