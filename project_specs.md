@@ -150,6 +150,42 @@ paulos/
 - [x] Responsive down to 375px wide — nothing overflows sideways
 - [x] Reduced-motion setting stops the animations
 
+## Deployment
+
+**Phase 1 — publish (now).** The site is fully static with no secrets, so it
+deploys as-is: GitHub repository → Vercel project → automatic build on every
+push to `main`. Starting on the free `*.vercel.app` address; a custom domain can
+be attached later without any code change.
+
+## Phase 2 — real bookings (not built yet, needs approval)
+
+Turns the reserve page from "phone this through" into an actual reservation.
+
+**What gets added**
+- `bookings` table in Supabase: id, name, phone, email, party_size, booking_date,
+  booking_time, occasion, notes, window_seating, status, created_at.
+- `POST /api/bookings` — validates the request, writes one row, sends two emails.
+  Business logic lives in `lib/bookings.ts`; the route stays thin.
+- Emails via Resend: one to `paulosmunxar@gmail.com` with the guest's details,
+  one to the guest confirming the request.
+- Spam protection on the endpoint, plus a rate limit, so the inbox cannot be
+  flooded.
+
+**Supabase rules that apply**
+- RLS stays on. The `bookings` table gets **no** public read or write policy.
+- The route uses the server-side client with the service role key, which never
+  appears in client code and lives only in Vercel's environment variables.
+- Guests never read bookings back; they only receive the email.
+
+**Only switch it on when**
+- Someone at Paulos has agreed to check that inbox daily. An unwatched booking
+  system is worse than the phone number, because guests believe they have a table.
+- Until then the page keeps saying the request is not confirmed.
+
+**Still not built by Phase 2:** table availability and capacity limits. Every
+request is a request until the restaurant confirms it, so the site must not
+imply a slot is held.
+
 ## Notes from the build
 - `lucide-react` v1 removed third-party brand marks, so the Instagram and
   Facebook icons are inlined in `components/BrandIcons.tsx`.
