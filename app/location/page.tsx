@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 import Reveal from "@/components/Reveal";
@@ -7,6 +6,14 @@ export const metadata = { title: "Location — Paulos" };
 
 const MAPS_URL =
   "https://www.google.com/maps/place/Paulos+Bar/@36.030476,14.2324688,17z";
+
+/**
+ * Google's share-embed URL. It needs no API key and no billing account, unlike
+ * the Maps JavaScript or Embed APIs — which matters for a site with no backend.
+ * The pin sits on the restaurant; visitors can still drag and zoom from here.
+ */
+const MAPS_EMBED_URL =
+  "https://maps.google.com/maps?q=Paulos%20Bar,%20Munxar,%20Gozo&ll=36.030476,14.2324688&z=17&hl=en&output=embed";
 
 const HOURS = [
   { day: "Monday", time: "Closed", closed: true },
@@ -37,12 +44,12 @@ export default function LocationPage() {
       {/* ===================== MAP + ADDRESS ===================== */}
       <section className="section--card">
         <div className="split">
-          <div className="split-media" style={{ minHeight: 520 }}>
-            <Image
-              src="/images/location-map.png"
-              alt="Map showing Paulos Bar in Munxar, Gozo"
-              fill
-              sizes="(max-width: 860px) 100vw, 50vw"
+          <div className="split-media split-media--map" style={{ minHeight: 520 }}>
+            <iframe
+              src={MAPS_EMBED_URL}
+              title="Map showing Paulos Bar in Munxar, Gozo"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
           <Reveal className="split-panel">

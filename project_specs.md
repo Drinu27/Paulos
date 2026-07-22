@@ -46,8 +46,10 @@ Full-screen photo header, a centred statement, two alternating photo/text splits
 Page header, category filter, masonry grid of photographs.
 
 ### Location (`/location`)
-Page header, map image beside the address and contact details, opening hours
-table, and a gold "Reserve the night" call to action.
+Page header, a live Google map beside the address and contact details, opening
+hours table, and a gold "Reserve the night" call to action. The map is Google's
+share-embed iframe centred on the restaurant, so visitors can drag and zoom it.
+It needs no API key and no billing account, which keeps the site backend-free.
 
 ### Reserve (`/booking`)
 Four-step reservation flow — party size → date & time → your details → confirmed —
@@ -77,7 +79,7 @@ None. All content (menu items and prices, reviews, opening hours, address) is ha
 ---
 
 ## Third-party services
-None. No Supabase, no Stripe, no analytics, no email service. External links only: **Bolt Food** (the nav "Order" button — delivery and takeaway are handled entirely on Bolt's site), Instagram, Facebook, Google Maps, a `tel:` phone link, and a `mailto:` link to `paulosmunxar@gmail.com`.
+No Supabase, no Stripe, no analytics, no email service, no API keys. One embed: the **Google Maps** share-embed iframe on the location page (keyless, no billing). External links only otherwise: **Bolt Food** (the nav "Order" button — delivery and takeaway are handled entirely on Bolt's site), Instagram, Facebook, Google Maps, a `tel:` phone link, and a `mailto:` link to `paulosmunxar@gmail.com`.
 
 ---
 
