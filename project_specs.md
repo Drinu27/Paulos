@@ -194,8 +194,13 @@ imply a slot is held.
 - Photography was sourced from the full-resolution originals in Downloads and
   resized into `public/images` (33 files, ~4.9 MB total).
 - The gallery filters are All / Pizza / Burgers / The Kitchen. The design had
-  Food / Grill / Room / Drinks / Nights across 15 frames, but there are only 11
-  photographs and none of the room, drinks or guests — empty categories would
-  have looked broken.
+  Food / Grill / Room / Drinks / Nights across 15 frames, but there are still no
+  photographs of the room, the drinks or guests — empty categories would have
+  looked broken.
+- The gallery holds **24 photographs** (7 pizza, 11 burgers, 6 kitchen), rebuilt
+  on 2026-07-22 from Joel Gueller's "Paulos June 2026" set of 23 originals. The
+  black-and-white oven shot (`gal-24.jpg`) is the one frame kept from the earlier
+  batch, because it is not in that set. Originals are 4032×6048 and up; they are
+  resized to a 1400px long edge at JPEG quality 82 (~4.3 MB for all 24).
 - The booking step labels hide below 1150px wide. Four labels plus their markers
   do not fit in the step column below that, and were being clipped.
