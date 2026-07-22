@@ -6,6 +6,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
+// Paulos takes delivery and takeaway orders through Bolt Food, not through this site
+const ORDER_URL =
+  "https://food.bolt.eu/en/831/p/15567-paulos-bar?utm_source=share_provider&utm_medium=product&utm_content=menu_header";
+
 const LINKS = [
   { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
@@ -65,12 +69,27 @@ export default function SiteNav() {
               {link.label}
             </Link>
           ))}
+
+          {/* Same order link again, because the desktop one is hidden on phones */}
+          <a
+            className="btn btn--gold nav-cta-mobile"
+            href={ORDER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Order
+          </a>
         </nav>
 
         <div className="nav-right">
-          <Link className="btn btn--gold btn--sm nav-cta-desktop" href="/booking">
+          <a
+            className="btn btn--gold btn--sm nav-cta-desktop"
+            href={ORDER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Order
-          </Link>
+          </a>
           <button
             className="nav-toggle"
             aria-label={open ? "Close menu" : "Open menu"}

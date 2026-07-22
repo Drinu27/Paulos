@@ -57,7 +57,7 @@ with a live summary panel alongside.
 
 ## Landing page sections (in order)
 
-1. **Nav** — logo, links (Home / Menu / About / Gallery / Location / Reserve), gold "Order" button. Transparent over the hero, turns to blurred black once you scroll. Full-screen drawer on mobile.
+1. **Nav** — logo, links (Home / Menu / About / Gallery / Location / Reserve), gold "Order" button that opens the Paulos page on Bolt Food in a new tab. Transparent over the hero, turns to blurred black once you scroll. Full-screen drawer on mobile, which carries its own copy of the Order button.
 2. **Hero** — full-screen photo slideshow (5 images, cross-fades every 4.5s), "EST. 2020" eyebrow, headline "Good **Food.** Good **Times.**", gold "Reserve the night" button, opening hours pinned bottom-right, gold rule along the bottom.
 3. **Marquee** — scrolling strip: Pizzeria ✦ Grill ✦ Homemade ✦ Signature Dishes ✦ Local Ingredients
 4. **Menu feature panel** — split layout: photo on the left, solid gold panel on the right with "Looking for our menu?" and a link to the menu.
@@ -77,7 +77,7 @@ None. All content (menu items and prices, reviews, opening hours, address) is ha
 ---
 
 ## Third-party services
-None. No Supabase, no Stripe, no analytics, no email service. External links only: Instagram, Facebook, Google Maps, a `tel:` phone link, and a `mailto:` link to `paulosmunxar@gmail.com`.
+None. No Supabase, no Stripe, no analytics, no email service. External links only: **Bolt Food** (the nav "Order" button — delivery and takeaway are handled entirely on Bolt's site), Instagram, Facebook, Google Maps, a `tel:` phone link, and a `mailto:` link to `paulosmunxar@gmail.com`.
 
 ---
 

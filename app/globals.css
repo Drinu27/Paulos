@@ -351,6 +351,8 @@ button { font-family: inherit; }
   background: var(--gold);
 }
 .nav-right { display: flex; align-items: center; gap: 24px; }
+/* The drawer copy of the order button — only ever shown on mobile */
+.nav-cta-mobile { display: none; }
 .nav-toggle {
   display: none;
   width: 44px; height: 44px;
@@ -392,6 +394,7 @@ button { font-family: inherit; }
   }
   .nav-link { font-size: 1.5rem; letter-spacing: 3px; }
   .nav-cta-desktop { display: none; }
+  .nav-cta-mobile { display: inline-flex; margin-top: 8px; }
 }
 
 /* ============================================================
