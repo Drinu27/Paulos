@@ -14,7 +14,7 @@ const PHONE = "+356 2156 9191";
 const PHONE_HREF = "tel:+35621569191";
 
 /** Reservations are sent here as a WhatsApp message. Digits only, no plus. */
-const WHATSAPP_NUMBER = "35679796149";
+const WHATSAPP_NUMBER = "35679558773";
 
 /**
  * Real opening hours, by weekday. Closed Monday and Tuesday.

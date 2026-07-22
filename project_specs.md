@@ -92,7 +92,7 @@ nothing had been sent and they had to phone and read it all back out. All the
 effort, none of the result.
 
 Now the last step opens WhatsApp with the whole reservation already written out,
-addressed to **+356 7979 6149**. The guest taps send; Paulos replies to confirm.
+addressed to **+356 7955 8773**. The guest taps send; Paulos replies to confirm.
 
 **Why WhatsApp rather than a database or email**
 - Nothing to run, nothing to pay for, no API keys, no accounts to keep alive.
@@ -138,7 +138,7 @@ Sent from paulos-pearl.vercel.app
   the restaurant confirms it.
 
 ## What "done" looks like for this task
-- [x] Finishing the flow opens WhatsApp at +356 7979 6149 with the reservation
+- [x] Finishing the flow opens WhatsApp at +356 7955 8773 with the reservation
       filled in and readable
 - [x] Works on a phone (opens the app) and on desktop (opens WhatsApp Web) —
       `wa.me` handles both
