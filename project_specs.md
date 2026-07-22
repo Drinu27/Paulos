@@ -83,13 +83,68 @@ No Supabase, no Stripe, no analytics, no email service, no API keys. One embed: 
 
 ---
 
-## Honesty constraints on the booking page
-The reservation flow has **no backend**, so it must never tell a guest their table is booked:
-- Every time slot is shown as available. The design faked unavailability with a maths formula, which would turn real customers away for no reason.
-- The final step says the request has been **received, not confirmed**, and gives the phone number so the guest can actually secure the table.
-- No invented booking reference, and no claim that a confirmation email was sent — because none is.
+## Reservations — how they actually reach the restaurant
 
-Once a real booking service is wired up, these can become real confirmations.
+**Decided 2026-07-22: the booking flow hands off to WhatsApp.**
+
+The old ending was the problem. A guest filled in four steps and was then told
+nothing had been sent and they had to phone and read it all back out. All the
+effort, none of the result.
+
+Now the last step opens WhatsApp with the whole reservation already written out,
+addressed to **+356 7979 6149**. The guest taps send; Paulos replies to confirm.
+
+**Why WhatsApp rather than a database or email**
+- Nothing to run, nothing to pay for, no API keys, no accounts to keep alive.
+  The site stays a static marketing site.
+- The reply comes back on the same thread, so the guest can see it was confirmed
+  by a human — which an auto-email cannot honestly claim.
+- Adrian confirmed someone checks daily.
+- It degrades well: WhatsApp Web covers desktop, and the phone number stays on
+  the page for anyone who would rather call.
+
+**What changes in the flow**
+1. Party size — unchanged.
+2. Date & time — unchanged.
+3. Details — **email field removed** (nothing is emailed to the guest, so asking
+   for it was dishonest). **Phone becomes optional**, because WhatsApp already
+   shows the restaurant who is writing. Name stays required. **Window seating
+   toggle removed** on 2026-07-22 — Paulos does not take seating requests.
+4. Summary — becomes "Send on WhatsApp": the review ticket, one gold button that
+   opens the prefilled chat, and a "call instead" fallback.
+
+**Message format sent to the restaurant**
+```
+Hi Paulos, I'd like to book a table.
+
+Name:     <name>
+Party:    <n> guests
+Date:     <Fri 25 Jul>
+Time:     <19:30>
+Occasion: <Dinner>
+Notes:    <notes>
+Phone:    <phone, if given>
+
+Sent from paulos-pearl.vercel.app
+```
+
+## Honesty constraints that still apply
+- Every time slot is shown as available. The design faked unavailability with a
+  maths formula, which would turn real customers away for no reason.
+- The flow asks for a table, it does not grant one. Wording stays "request"
+  until Paulos replies on WhatsApp. No invented booking reference.
+- Nothing claims an email was sent, because none is.
+- No table availability or capacity checking. Every request is a request until
+  the restaurant confirms it.
+
+## What "done" looks like for this task
+- [x] Finishing the flow opens WhatsApp at +356 7979 6149 with the reservation
+      filled in and readable
+- [x] Works on a phone (opens the app) and on desktop (opens WhatsApp Web) —
+      `wa.me` handles both
+- [x] Email field gone; name still required; phone optional
+- [x] The page never says a table is booked
+- [x] `npm run build` passes and the flow works end to end in the browser
 
 ---
 
@@ -159,7 +214,12 @@ deploys as-is: GitHub repository → Vercel project → automatic build on every
 push to `main`. Starting on the free `*.vercel.app` address; a custom domain can
 be attached later without any code change.
 
-## Phase 2 — real bookings (not built yet, needs approval)
+## Phase 2 — database-backed bookings (SUPERSEDED, kept as a future option)
+
+**Not being built.** The WhatsApp handoff decided on 2026-07-22 solves the same
+problem with nothing to run and nothing to pay for. Revisit this only if Paulos
+outgrows WhatsApp — say, if they want a searchable history of bookings or the
+volume stops fitting in one chat thread.
 
 Turns the reserve page from "phone this through" into an actual reservation.
 

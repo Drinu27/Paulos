@@ -3,14 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { WhatsAppIcon } from "@/components/BrandIcons";
 
-const STEP_LABELS = ["Party", "Date & Time", "Details", "Summary"];
+const STEP_LABELS = ["Party", "Date & Time", "Details", "Send"];
 const OCCASIONS = ["Dinner", "Birthday", "Anniversary", "Date night", "Business"];
 const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const PHONE = "+356 2156 9191";
 const PHONE_HREF = "tel:+35621569191";
+
+/** Reservations are sent here as a WhatsApp message. Digits only, no plus. */
+const WHATSAPP_NUMBER = "35679796149";
 
 /**
  * Real opening hours, by weekday. Closed Monday and Tuesday.
@@ -45,7 +49,15 @@ function sittingsFor(weekday: number) {
   return out;
 }
 
-type BookingDate = { dow: string; dnum: number; mon: string; full: string; key: string; weekday: number };
+type BookingDate = {
+  dow: string;
+  dnum: number;
+  mon: string;
+  full: string;
+  key: string;
+  weekday: number;
+  year: number;
+};
 
 /** The next 18 days the restaurant is open. */
 function generateDates(): BookingDate[] {
@@ -62,6 +74,7 @@ function generateDates(): BookingDate[] {
       full: `${DOW[weekday]} ${cursor.getDate()} ${MON[cursor.getMonth()]}`,
       key: `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`,
       weekday,
+      year: cursor.getFullYear(),
     });
   }
   return out;
@@ -92,16 +105,21 @@ export default function BookingFlow() {
   const [time, setTime] = useState<string | null>(null);
   const [details, setDetails] = useState({
     name: "",
-    email: "",
     phone: "",
     occasion: "Dinner",
     notes: "",
-    window: false,
   });
-  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string }>({});
 
-  useEffect(() => setDates(generateDates()), []);
-  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [step]);
+  // Braces matter: an arrow shorthand would return whatever the call returns,
+  // and React treats an effect's return value as a cleanup function.
+  useEffect(() => {
+    setDates(generateDates());
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [step]);
 
   const set = <K extends keyof typeof details>(key: K, value: (typeof details)[K]) =>
     setDetails((prev) => ({ ...prev, [key]: value }));
@@ -114,8 +132,7 @@ export default function BookingFlow() {
   function validateDetails() {
     const next: typeof errors = {};
     if (!details.name.trim()) next.name = "Tell us who the table is for.";
-    // Phone is how the restaurant confirms — nothing is emailed
-    if (details.phone.replace(/\D/g, "").length < 6) next.phone = "A number we can call you back on.";
+    // Phone stays optional — WhatsApp already shows the restaurant who is writing
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -123,6 +140,27 @@ export default function BookingFlow() {
   function next() {
     if (step === 2 && !validateDetails()) return;
     setStep((s) => Math.min(s + 1, 3));
+  }
+
+  /**
+   * The reservation as a WhatsApp message. Plain lines, no column padding —
+   * WhatsApp renders in a proportional font, so padded columns would not line up.
+   */
+  function whatsappHref() {
+    const lines = [
+      "Hi Paulos, I'd like to book a table.",
+      "",
+      `Name: ${details.name.trim()}`,
+      `Party: ${partyLabel}`,
+      `Date: ${chosenDate?.full} ${chosenDate?.year}`,
+      `Time: ${time}`,
+      `Occasion: ${details.occasion}`,
+    ];
+    if (details.notes.trim()) lines.push(`Notes: ${details.notes.trim()}`);
+    if (details.phone.trim()) lines.push(`Phone: ${details.phone.trim()}`);
+    lines.push("", "Sent from the Paulos website");
+
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
   }
 
   return (
@@ -152,12 +190,6 @@ export default function BookingFlow() {
             <div className="res-line">
               <span className="k">Time</span>
               <span className={`v${time ? " set" : ""}`}>{time ?? "—"}</span>
-            </div>
-            <div className="res-line">
-              <span className="k">Seating</span>
-              <span className={`v${details.window ? " set" : ""}`}>
-                {details.window ? "Window" : "Any"}
-              </span>
             </div>
           </div>
         </div>
@@ -272,9 +304,7 @@ export default function BookingFlow() {
               Step three
             </div>
             <h2>Your details</h2>
-            <p className="sub">
-              So we know who to expect, and how to reach you.
-            </p>
+            <p className="sub">So we know who to expect.</p>
 
             <div className="stack gap-24">
               <div className="field-grid">
@@ -293,29 +323,16 @@ export default function BookingFlow() {
                 </div>
                 <div>
                   <div className="field">
-                    <label htmlFor="bk-phone">Phone</label>
+                    <label htmlFor="bk-phone">Phone (optional)</label>
                     <input
                       id="bk-phone"
                       type="tel"
                       value={details.phone}
                       placeholder="+356 0000 0000"
-                      aria-invalid={!!errors.phone}
                       onChange={(e) => set("phone", e.target.value)}
                     />
                   </div>
-                  {errors.phone && <div className="seg-error">{errors.phone}</div>}
                 </div>
-              </div>
-
-              <div className="field">
-                <label htmlFor="bk-email">Email (optional)</label>
-                <input
-                  id="bk-email"
-                  type="email"
-                  value={details.email}
-                  placeholder="you@email.com"
-                  onChange={(e) => set("email", e.target.value)}
-                />
               </div>
 
               <div>
@@ -346,18 +363,6 @@ export default function BookingFlow() {
                 />
               </div>
 
-              <div className="row" style={{ justifyContent: "space-between", paddingTop: 8 }}>
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={details.window}
-                    onChange={(e) => set("window", e.target.checked)}
-                  />
-                  <span className="track" />
-                  <span className="switch-label">Window seating</span>
-                </label>
-                <span className="micro">Subject to availability</span>
-              </div>
             </div>
 
             <div className="step-actions">
@@ -365,7 +370,7 @@ export default function BookingFlow() {
                 Back
               </button>
               <button className="btn btn--gold btn--lg" onClick={next}>
-                Review request
+                Review and send
               </button>
             </div>
           </div>
@@ -374,20 +379,27 @@ export default function BookingFlow() {
         {step === 3 && (
           <div className="step-body">
             <div className="eyebrow eyebrow--gold" style={{ marginBottom: 14 }}>
-              Almost there
+              Last step
             </div>
             <h2>
-              One call
+              Send it
               <br />
-              to confirm
+              to Paulos
             </h2>
             <p className="sub">
-              We can&rsquo;t take bookings online just yet, so nothing has been sent. Give us a
-              ring and read this out — it takes a minute and the table is yours.
+              Everything below is already written out. Tap send in WhatsApp and we&rsquo;ll
+              reply to confirm your table — usually the same day.
             </p>
 
-            <a className="btn btn--gold btn--lg" href={PHONE_HREF} style={{ alignSelf: "flex-start" }}>
-              Call {PHONE}
+            <a
+              className="btn btn--gold btn--lg btn--icon"
+              href={whatsappHref()}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ alignSelf: "flex-start" }}
+            >
+              <WhatsAppIcon />
+              Send on WhatsApp
             </a>
 
             <div style={{ width: "100%", maxWidth: 460, marginTop: 36 }}>
@@ -423,13 +435,17 @@ export default function BookingFlow() {
               </div>
             </div>
 
-            <div className="row gap-16" style={{ marginTop: 36 }}>
+            <p className="micro" style={{ color: "var(--text-muted)", marginTop: 28 }}>
+              Nothing is held until we reply. Would rather talk to someone?
+            </p>
+
+            <div className="row gap-16" style={{ marginTop: 16 }}>
+              <a className="btn btn--ghost btn--lg" href={PHONE_HREF}>
+                Call {PHONE}
+              </a>
               <button className="btn btn--ghost btn--lg" onClick={() => setStep(2)}>
                 Change details
               </button>
-              <Link className="btn btn--ghost btn--lg" href="/menu">
-                Browse the menu
-              </Link>
             </div>
           </div>
         )}

@@ -9,7 +9,7 @@ export default function BookingPage() {
         <div className="container">
           <h1 className="display display--lg">Reserve</h1>
           <p className="lede mt-24">
-            Three quick steps, then one short call to lock the table in.
+            Three quick steps, then send it straight to us on WhatsApp.
           </p>
         </div>
       </section>

@@ -33,7 +33,9 @@ export default function SiteNav() {
   }, []);
 
   // Close the drawer on route change so a tap always lands somewhere
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
