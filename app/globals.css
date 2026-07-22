@@ -1146,6 +1146,17 @@ button { font-family: inherit; }
   padding-top: 28px;
   border-top: 1px solid var(--border-hairline);
 }
+/* Buttons carry white-space: nowrap, so a long label like "Review and send"
+   cannot shrink and pushes itself off the right edge on a phone. Stack them
+   full width instead, primary on top. */
+@media (max-width: 560px) {
+  .step-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .step-actions .btn { width: 100%; padding: 0 16px; }
+}
 .btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
 /* ============================================================
