@@ -522,7 +522,8 @@ button { font-family: inherit; }
   gap: 40px;
   padding-right: 40px;
 }
-.marquee-item .dot { color: var(--gold); font-size: 0.7em; }
+.marquee-item > span { display: inline-flex; align-items: center; gap: 0.5em; }
+.marquee-item .dot { color: var(--gold); font-size: 0.7em; line-height: 1; }
 .marquee-item.muted { color: var(--text-muted); }
 /* the track holds two identical copies, so -50% loops seamlessly */
 @keyframes marquee-scroll {

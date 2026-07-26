@@ -11,7 +11,7 @@ export default function Marquee({ items, reverse, muted }: Props) {
     <span className={`marquee-item${muted ? " muted" : ""}`}>
       {items.map((item) => (
         <span key={item}>
-          {item} <span className="dot">✦</span>
+          {item}<span className="dot">✦</span>
         </span>
       ))}
     </span>
