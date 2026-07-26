@@ -200,7 +200,7 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Read all 14 reviews on TripAdvisor <ArrowRight />
+              Read reviews on TripAdvisor <ArrowRight />
             </a>
           </div>
         </div>

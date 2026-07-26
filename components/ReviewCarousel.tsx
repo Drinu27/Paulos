@@ -47,17 +47,6 @@ export default function ReviewCarousel() {
           </figure>
         ))}
       </div>
-
-      <div className="review-dots">
-        {REVIEWS.map((review, i) => (
-          <button
-            key={review.by}
-            className={`rdot${i === current ? " active" : ""}`}
-            onClick={() => setCurrent(i)}
-            aria-label={`Show review from ${review.by}`}
-          />
-        ))}
-      </div>
     </>
   );
 }
