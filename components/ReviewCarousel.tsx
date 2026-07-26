@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const REVIEWS = [
-  { quote: "The best pizza I've had outside Naples.", by: "Felix B." },
-  { quote: "A hidden gem in Munxar. The burgers are unreal.", by: "James K." },
-  { quote: "Warm atmosphere, generous portions, great family night out.", by: "Sophie M." },
-  { quote: "Freshly made, full of flavour — we'll be back every week.", by: "David C." },
+  { quote: "Burgers are the best on the island — the taste is amazing.", by: "Kerry G." },
+  { quote: "A friendly, relaxed atmosphere with really great food. Well worth a visit.", by: "Neil F." },
+  { quote: "Makes the best pizzas with the thinnest crusts, and excellent service too.", by: "Colin H." },
+  { quote: "The food was delicious and abundant, and the staff were super friendly.", by: "Antida R." },
 ];
 
 const INTERVAL_MS = 4000;
