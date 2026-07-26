@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 type Props = {
   items: string[];
   /** Scrolls right-to-left by default; reverse sends it the other way. */
@@ -10,9 +12,12 @@ export default function Marquee({ items, reverse, muted }: Props) {
   const strip = (
     <span className={`marquee-item${muted ? " muted" : ""}`}>
       {items.map((item) => (
-        <span key={item}>
-          {item}<span className="dot">✦</span>
-        </span>
+        <Fragment key={item}>
+          <span className="marquee-word">{item}</span>
+          <span className="dot" aria-hidden="true">
+            ✦
+          </span>
+        </Fragment>
       ))}
     </span>
   );
