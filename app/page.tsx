@@ -193,6 +193,16 @@ export default function HomePage() {
             </Reveal>
           </div>
           <ReviewCarousel />
+          <div className="mt-32">
+            <a
+              className="text-link"
+              href="https://www.tripadvisor.com/Restaurant_Review-g1896415-d20992772-Reviews-Paulos_Bar-Munxar_Island_of_Gozo.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Read all 14 reviews on TripAdvisor <ArrowRight />
+            </a>
+          </div>
         </div>
       </section>
 
