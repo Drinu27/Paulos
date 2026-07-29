@@ -8,7 +8,7 @@ import ReviewCarousel from "@/components/ReviewCarousel";
 
 const FAVOURITES = [
   { name: "BBQ Chicken", image: "/images/dish-bbq-chicken.jpg" },
-  { name: "Whiskey Glaze Burger", image: "/images/dish-whiskey-burger.jpg" },
+  { name: "Whiskey Glaze Burger", image: "/images/dish-whiskey-burger.jpg", position: "center 60%" },
   { name: "Beefy Jack", image: "/images/dish-beefy-jack.jpg" },
 ];
 
@@ -128,6 +128,7 @@ export default function HomePage() {
                       alt={dish.name}
                       fill
                       sizes="(max-width: 860px) 100vw, 33vw"
+                      style={dish.position ? { objectPosition: dish.position } : undefined}
                     />
                   </div>
                   <div className="body">
