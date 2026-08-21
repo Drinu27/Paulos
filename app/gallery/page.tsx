@@ -1,7 +1,11 @@
 import Link from "next/link";
 import GalleryGrid from "@/components/GalleryGrid";
 
-export const metadata = { title: "Gallery — Paulos" };
+export const metadata = {
+  title: "Gallery",
+  description:
+    "A look inside Paulos — wood-fired pizzas, stacked burgers and good times in Munxar, Gozo.",
+};
 
 export default function GalleryPage() {
   return (

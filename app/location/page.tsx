@@ -2,7 +2,11 @@ import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 import Reveal from "@/components/Reveal";
 
-export const metadata = { title: "Location — Paulos" };
+export const metadata = {
+  title: "Location & Hours",
+  description:
+    "Find Paulos at Pjazza tal-Knisja, Munxar, Gozo. Opening hours, directions and phone — open Wednesday to Sunday.",
+};
 
 const MAPS_URL =
   "https://www.google.com/maps/place/Paulos+Bar/@36.030476,14.2324688,17z";

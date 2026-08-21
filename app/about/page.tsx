@@ -4,7 +4,11 @@ import { ArrowRight } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 
-export const metadata = { title: "About — Paulos" };
+export const metadata = {
+  title: "About",
+  description:
+    "The story behind Paulos — a family-run bar, pizzeria and grill in the heart of Munxar, Gozo.",
+};
 
 export default function AboutPage() {
   return (

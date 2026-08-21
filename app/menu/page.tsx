@@ -1,7 +1,11 @@
 import MenuList from "@/components/MenuList";
 import PageHero from "@/components/PageHero";
 
-export const metadata = { title: "Menu — Paulos" };
+export const metadata = {
+  title: "Menu",
+  description:
+    "The full Paulos menu — artisan and signature pizzas, house-grilled burgers, salads, wraps and sides, made fresh in Munxar, Gozo.",
+};
 
 export default function MenuPage() {
   return (

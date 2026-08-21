@@ -1,6 +1,10 @@
 import BookingFlow from "@/components/BookingFlow";
 
-export const metadata = { title: "Reserve — Paulos" };
+export const metadata = {
+  title: "Reserve a Table",
+  description:
+    "Book a table at Paulos in Munxar, Gozo. Reserve online for artisan pizzas, burgers and grill.",
+};
 
 export default function BookingPage() {
   return (
