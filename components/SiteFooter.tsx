@@ -7,6 +7,8 @@ const MAPS_URL =
   "https://www.google.com/maps/place/Paulos+Bar/@36.030476,14.2324688,17z";
 
 export default function SiteFooter() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
       <div className="footer-top">
@@ -71,6 +73,12 @@ export default function SiteFooter() {
           </a>
         </div>
         <span className="micro">Open Wed – Sun</span>
+      </div>
+
+      <div className="footer-legal">
+        <span className="micro">
+          © {year} Paulos Bar, Pizzeria &amp; Grill. All rights reserved.
+        </span>
       </div>
     </footer>
   );
