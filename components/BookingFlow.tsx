@@ -21,7 +21,7 @@ const WHATSAPP_NUMBER = "35679796149";
  * Each window is [firstSitting, lastSitting] in 24h minutes.
  */
 const SERVICE_WINDOWS: Record<number, [string, string][]> = {
-  0: [["09:00", "12:30"], ["17:30", "21:30"]], // Sunday — lunch and dinner
+  0: [["17:30", "21:30"]], // Sunday — dinner only (open earlier for drinks, but no table bookings)
   3: [["18:30", "21:30"]], // Wednesday
   4: [["18:30", "21:30"]], // Thursday
   5: [["17:30", "21:30"]], // Friday
