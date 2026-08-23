@@ -39,12 +39,25 @@ function toLabel(mins: number) {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
-/** Every half-hour sitting the kitchen actually serves on that weekday. */
-function sittingsFor(weekday: number) {
+/** Minutes since midnight, right now, on the visitor's own clock. */
+function nowMinutes() {
+  const n = new Date();
+  return n.getHours() * 60 + n.getMinutes();
+}
+
+/**
+ * Every half-hour sitting the kitchen still serves on that weekday.
+ * When `isToday` is set, sittings at or before the current time are dropped —
+ * you can't book a table for a time that has already passed.
+ */
+function sittingsFor(weekday: number, isToday = false) {
   const windows = SERVICE_WINDOWS[weekday] ?? [];
+  const cutoff = isToday ? nowMinutes() : -1;
   const out: string[] = [];
   for (const [open, last] of windows) {
-    for (let t = toMinutes(open); t <= toMinutes(last); t += 30) out.push(toLabel(t));
+    for (let t = toMinutes(open); t <= toMinutes(last); t += 30) {
+      if (t > cutoff) out.push(toLabel(t));
+    }
   }
   return out;
 }
@@ -57,11 +70,13 @@ type BookingDate = {
   key: string;
   weekday: number;
   year: number;
+  isToday: boolean;
 };
 
 /** Today plus the next open days, up to 18 the restaurant is open. */
 function generateDates(): BookingDate[] {
   const out: BookingDate[] = [];
+  const todayStr = new Date().toDateString();
   // Start one day back so the first pass through the loop lands on today —
   // if the kitchen is open today, same-day bookings should be allowed.
   const cursor = new Date();
@@ -70,6 +85,10 @@ function generateDates(): BookingDate[] {
     cursor.setDate(cursor.getDate() + 1);
     const weekday = cursor.getDay();
     if (!SERVICE_WINDOWS[weekday]) continue; // closed Mon & Tue
+    const isToday = cursor.toDateString() === todayStr;
+    // If it's already past the last sitting, don't offer today at all —
+    // selecting it would show an empty list of times.
+    if (isToday && sittingsFor(weekday, true).length === 0) continue;
     out.push({
       dow: DOW[weekday],
       dnum: cursor.getDate(),
@@ -78,6 +97,7 @@ function generateDates(): BookingDate[] {
       key: `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`,
       weekday,
       year: cursor.getFullYear(),
+      isToday,
     });
   }
   return out;
@@ -128,7 +148,7 @@ export default function BookingFlow() {
     setDetails((prev) => ({ ...prev, [key]: value }));
 
   const chosenDate = dateIdx != null ? dates[dateIdx] : null;
-  const sittings = chosenDate ? sittingsFor(chosenDate.weekday) : [];
+  const sittings = chosenDate ? sittingsFor(chosenDate.weekday, chosenDate.isToday) : [];
 
   const partyLabel = party ? (party === 9 ? "9+ guests" : `${party} guest${party === 1 ? "" : "s"}`) : null;
 
