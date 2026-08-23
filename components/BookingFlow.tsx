@@ -59,10 +59,13 @@ type BookingDate = {
   year: number;
 };
 
-/** The next 18 days the restaurant is open. */
+/** Today plus the next open days, up to 18 the restaurant is open. */
 function generateDates(): BookingDate[] {
   const out: BookingDate[] = [];
+  // Start one day back so the first pass through the loop lands on today —
+  // if the kitchen is open today, same-day bookings should be allowed.
   const cursor = new Date();
+  cursor.setDate(cursor.getDate() - 1);
   while (out.length < 18) {
     cursor.setDate(cursor.getDate() + 1);
     const weekday = cursor.getDay();
