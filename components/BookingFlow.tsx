@@ -28,6 +28,13 @@ const SERVICE_WINDOWS: Record<number, [string, string][]> = {
   6: [["17:30", "21:30"]], // Saturday
 };
 
+/**
+ * One-off dates the restaurant is closed, even though the weekday is normally open.
+ * Keys match the `key` format below: `${year}-${monthIndex}-${date}` (month is 0-based).
+ * 2026-7-26 = Wednesday 26 August 2026 — closed this week only. Remove when reopened.
+ */
+const CLOSED_DATES = new Set<string>(["2026-7-26"]);
+
 function toMinutes(hhmm: string) {
   const [h, m] = hhmm.split(":").map(Number);
   return h * 60 + m;
@@ -85,6 +92,8 @@ function generateDates(): BookingDate[] {
     cursor.setDate(cursor.getDate() + 1);
     const weekday = cursor.getDay();
     if (!SERVICE_WINDOWS[weekday]) continue; // closed Mon & Tue
+    const key = `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`;
+    if (CLOSED_DATES.has(key)) continue; // one-off closures (see CLOSED_DATES)
     const isToday = cursor.toDateString() === todayStr;
     // If it's already past the last sitting, don't offer today at all —
     // selecting it would show an empty list of times.
@@ -94,7 +103,7 @@ function generateDates(): BookingDate[] {
       dnum: cursor.getDate(),
       mon: MON[cursor.getMonth()],
       full: `${DOW[weekday]} ${cursor.getDate()} ${MON[cursor.getMonth()]}`,
-      key: `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`,
+      key,
       weekday,
       year: cursor.getFullYear(),
       isToday,

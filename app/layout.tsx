@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, Playfair_Display } from "next/font/google";
 import BackToTop from "@/components/BackToTop";
+import ClosureNotice from "@/components/ClosureNotice";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import "./globals.css";
@@ -148,6 +149,7 @@ export default function RootLayout({
         <main>{children}</main>
         <SiteFooter />
         <BackToTop />
+        <ClosureNotice />
       </body>
     </html>
   );

@@ -1213,10 +1213,79 @@ button { font-family: inherit; }
 .gap-16 { gap: 16px; }
 .gap-24 { gap: 24px; }
 
+/* ============================================================
+   CLOSURE NOTICE (entry popup)
+   ============================================================ */
+
+.notice-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: notice-fade var(--dur-base) var(--ease-standard);
+}
+.notice-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: var(--iron);
+  border: 1px solid var(--border-hairline);
+  border-top: 2px solid var(--gold); /* the one chromatic accent, per the system */
+  padding: clamp(32px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  animation: notice-rise var(--dur-slow) var(--ease-standard);
+}
+.notice-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-standard);
+}
+.notice-close:hover { color: var(--gold); }
+.notice-close svg { width: 20px; height: 20px; }
+.notice-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: var(--lh-title);
+  margin-bottom: 18px;
+}
+.notice-body {
+  color: var(--text-muted);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body-lg);
+  margin-bottom: 28px;
+  max-width: 40ch;
+}
+@keyframes notice-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes notice-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .marquee-track { animation: none; }
   .hero-slide { transition: none; }
   .review-slide { transition: none; }
+  .notice-overlay,
+  .notice-card { animation: none; }
 }
