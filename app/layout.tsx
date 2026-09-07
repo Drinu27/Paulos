@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import BackToTop from "@/components/BackToTop";
 import ClosureNotice from "@/components/ClosureNotice";
 import SiteFooter from "@/components/SiteFooter";
@@ -150,6 +151,7 @@ export default function RootLayout({
         <SiteFooter />
         <BackToTop />
         <ClosureNotice />
+        <Analytics />
       </body>
     </html>
   );
