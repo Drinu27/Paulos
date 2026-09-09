@@ -79,9 +79,13 @@ export default function ClosureNotice() {
           for the village feast
         </h3>
 
-        <p className="notice-body">
+        <p className="notice-body" style={{ marginBottom: 14 }}>
           It&rsquo;s the village feast of Saint Paul, so we&rsquo;re closed this week. We&rsquo;ll
           resume our usual hours, Wednesday through Sunday, from Wednesday 16 September. Thank you.
+        </p>
+
+        <p className="notice-body" style={{ color: "var(--gold)", fontStyle: "italic" }}>
+          Happy Feast to Everybody!
         </p>
 
         <button
