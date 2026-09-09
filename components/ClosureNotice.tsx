@@ -11,8 +11,8 @@ import { X } from "lucide-react";
  * never shows again, so the message can't go stale after the closure is over.
  * To retire it sooner, just delete <ClosureNotice /> from app/layout.tsx.
  */
-const STORAGE_KEY = "paulos-closure-2026-08-26";
-const SHOW_UNTIL = new Date(2026, 7, 26, 23, 59, 59); // Wed 26 Aug 2026 (month is 0-based)
+const STORAGE_KEY = "paulos-closure-2026-09-feast";
+const SHOW_UNTIL = new Date(2026, 8, 15, 23, 59, 59); // Tue 15 Sep 2026 — last day closed (month is 0-based)
 
 export default function ClosureNotice() {
   const [open, setOpen] = useState(false);
@@ -74,14 +74,14 @@ export default function ClosureNotice() {
         </div>
 
         <h3 id="notice-title" className="notice-title">
-          Closed Wednesday
+          Closed this week
           <br />
-          26 August
+          for the village feast
         </h3>
 
         <p className="notice-body">
-          We&rsquo;re closed this Wednesday, 26 August &mdash; this week only. We&rsquo;ll be
-          back to our usual hours, Wednesday through Sunday, from Thursday the 27th. Thank you.
+          It&rsquo;s the village feast of Saint Paul, so we&rsquo;re closed this week. We&rsquo;ll
+          resume our usual hours, Wednesday through Sunday, from Wednesday 16 September. Thank you.
         </p>
 
         <button

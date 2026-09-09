@@ -31,9 +31,17 @@ const SERVICE_WINDOWS: Record<number, [string, string][]> = {
 /**
  * One-off dates the restaurant is closed, even though the weekday is normally open.
  * Keys match the `key` format below: `${year}-${monthIndex}-${date}` (month is 0-based).
- * 2026-7-26 = Wednesday 26 August 2026 — closed this week only. Remove when reopened.
+ * Closed this week for the village feast of Saint Paul — every open day up to and
+ * including Sun 13 Sep 2026. Reopens Wednesday 16 September (Mon 14 & Tue 15 are
+ * closed anyway). Month index 8 = September. Remove these once reopened.
  */
-const CLOSED_DATES = new Set<string>(["2026-7-26"]);
+const CLOSED_DATES = new Set<string>([
+  "2026-8-9", // Wed 9 Sep
+  "2026-8-10", // Thu 10 Sep
+  "2026-8-11", // Fri 11 Sep
+  "2026-8-12", // Sat 12 Sep
+  "2026-8-13", // Sun 13 Sep
+]);
 
 function toMinutes(hhmm: string) {
   const [h, m] = hhmm.split(":").map(Number);
