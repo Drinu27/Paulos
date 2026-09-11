@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 /**
- * A one-off "we're closed on this date" popup shown once when a visitor arrives.
+ * A one-off feast-week popup ("no reservations this week, still open") shown once
+ * when a visitor arrives.
  * Keep this in sync with CLOSED_DATES in BookingFlow.tsx.
  *
  * SHOW_UNTIL is the last moment the notice appears — once it's passed, the popup
@@ -74,14 +75,13 @@ export default function ClosureNotice() {
         </div>
 
         <h3 id="notice-title" className="notice-title">
-          Closed this week
-          <br />
-          for the village feast
+          It&rsquo;s Feast Week
         </h3>
 
         <p className="notice-body" style={{ marginBottom: 14 }}>
-          It&rsquo;s the village feast of Saint Paul, so we&rsquo;re closed this week. We&rsquo;ll
-          resume our usual hours, Wednesday through Sunday, from Wednesday 16 September. Thank you.
+          It&rsquo;s the village feast of Saint Paul, so we won&rsquo;t be taking restaurant
+          reservations this week. We&rsquo;re still open, so do come and join us. Reservations
+          reopen on Wednesday 16 September. Thank you.
         </p>
 
         <p className="notice-body" style={{ color: "var(--gold)", fontStyle: "italic" }}>

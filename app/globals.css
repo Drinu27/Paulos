@@ -1280,12 +1280,13 @@ button { font-family: inherit; }
   to { opacity: 1; transform: none; }
 }
 
-/* Feast fireworks — a decorative, non-interactive overlay above the page and nav
-   (z 150) but beneath the closure notice (z 200). See components/FeastFireworks.tsx. */
+/* Feast fireworks — a decorative, non-interactive overlay above everything, including
+   the feast notice (z 200), so they burst over the popup. pointer-events: none keeps
+   the notice's buttons clickable through it. See components/FeastFireworks.tsx. */
 .feast-fireworks {
   position: fixed;
   inset: 0;
-  z-index: 150;
+  z-index: 250;
   pointer-events: none;
   opacity: 1;
   transition: opacity 1200ms var(--ease-standard);
