@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 /**
- * A one-off popup ("no bookings next week, a change is coming") shown once
- * when a visitor arrives.
+ * A one-off popup ("tonight is the last night we're taking bookings, a change is
+ * coming") shown once when a visitor arrives.
  * Keep this in sync with CLOSED_DATES in BookingFlow.tsx.
  *
  * SHOW_UNTIL is the last moment the notice appears — once it's passed, the popup
@@ -75,14 +75,14 @@ export default function ClosureNotice() {
         </div>
 
         <h3 id="notice-title" className="notice-title">
-          No bookings
+          Tonight is the
           <br />
-          next week
+          last booking
         </h3>
 
         <p className="notice-body" style={{ marginBottom: 14 }}>
-          A change is coming, so we&rsquo;re not taking table bookings next week, Wednesday 4
-          to Sunday 8 November. You can still book for today. Thank you.
+          A change is coming, so this evening is the last night we&rsquo;re taking table
+          bookings for. You can still book for tonight. Thank you.
         </p>
 
         <p className="notice-body" style={{ color: "var(--gold)", fontStyle: "italic" }}>

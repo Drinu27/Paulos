@@ -29,19 +29,12 @@ const SERVICE_WINDOWS: Record<number, [string, string][]> = {
 };
 
 /**
- * One-off dates the restaurant isn't taking bookings, even though the weekday is
- * normally open. Keys match the `key` format below: `${year}-${monthIndex}-${date}`
- * (month is 0-based). No bookings next week, Wed 4 – Sun 8 Nov 2026, while a change
- * is on the way (Mon 2 & Tue 3 are closed anyway). Month index 10 = November.
- * Remove these once bookings reopen.
+ * The last night we're taking bookings for. A change is on the way, so the only
+ * date on offer is this evening, Sunday 1 November 2026 — nothing beyond it is
+ * shown. Push this date forward (or remove the check in generateDates) once
+ * bookings reopen. Month is 0-based, so 10 = November.
  */
-const CLOSED_DATES = new Set<string>([
-  "2026-10-4", // Wed 4 Nov
-  "2026-10-5", // Thu 5 Nov
-  "2026-10-6", // Fri 6 Nov
-  "2026-10-7", // Sat 7 Nov
-  "2026-10-8", // Sun 8 Nov
-]);
+const LAST_BOOKABLE_DATE = new Date(2026, 10, 1);
 
 function toMinutes(hhmm: string) {
   const [h, m] = hhmm.split(":").map(Number);
@@ -92,16 +85,19 @@ type BookingDate = {
 function generateDates(): BookingDate[] {
   const out: BookingDate[] = [];
   const todayStr = new Date().toDateString();
+  // The last night on offer, taken to the end of that day.
+  const cutoff = new Date(LAST_BOOKABLE_DATE);
+  cutoff.setHours(23, 59, 59, 999);
   // Start one day back so the first pass through the loop lands on today —
   // if the kitchen is open today, same-day bookings should be allowed.
   const cursor = new Date();
   cursor.setDate(cursor.getDate() - 1);
   while (out.length < 18) {
     cursor.setDate(cursor.getDate() + 1);
+    if (cursor > cutoff) break; // nothing past the last bookable night
     const weekday = cursor.getDay();
     if (!SERVICE_WINDOWS[weekday]) continue; // closed Mon & Tue
     const key = `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`;
-    if (CLOSED_DATES.has(key)) continue; // one-off closures (see CLOSED_DATES)
     const isToday = cursor.toDateString() === todayStr;
     // If it's already past the last sitting, don't offer today at all —
     // selecting it would show an empty list of times.
@@ -285,6 +281,14 @@ export default function BookingFlow() {
             <p className="sub">
               We open Wednesday through Sunday. Closed Monday and Tuesday.
             </p>
+
+            {/* Once the last bookable night has passed there's nothing to pick. */}
+            {dates.length === 0 && (
+              <p className="sub">
+                We&rsquo;re not taking bookings at the moment &mdash; a change is on the way.
+                Do call us on {PHONE} in the meantime.
+              </p>
+            )}
 
             <div className="date-row">
               {dates.map((d, i) => (
