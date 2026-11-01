@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 /**
- * A one-off feast-week popup ("no reservations this week, still open") shown once
+ * A one-off popup ("no bookings next week, a change is coming") shown once
  * when a visitor arrives.
  * Keep this in sync with CLOSED_DATES in BookingFlow.tsx.
  *
@@ -12,8 +12,8 @@ import { X } from "lucide-react";
  * never shows again, so the message can't go stale after the closure is over.
  * To retire it sooner, just delete <ClosureNotice /> from app/layout.tsx.
  */
-const STORAGE_KEY = "paulos-closure-2026-09-feast";
-const SHOW_UNTIL = new Date(2026, 8, 15, 23, 59, 59); // Tue 15 Sep 2026 — last day closed (month is 0-based)
+const STORAGE_KEY = "paulos-closure-2026-11-change";
+const SHOW_UNTIL = new Date(2026, 10, 8, 23, 59, 59); // Sun 8 Nov 2026 — last day without bookings (month is 0-based)
 
 export default function ClosureNotice() {
   const [open, setOpen] = useState(false);
@@ -75,17 +75,18 @@ export default function ClosureNotice() {
         </div>
 
         <h3 id="notice-title" className="notice-title">
-          It&rsquo;s Feast Week
+          No bookings
+          <br />
+          next week
         </h3>
 
         <p className="notice-body" style={{ marginBottom: 14 }}>
-          It&rsquo;s the village feast of Saint Paul, so we won&rsquo;t be taking restaurant
-          reservations this week. We&rsquo;re still open, so do come and join us. Reservations
-          reopen on Wednesday 16 September. Thank you.
+          A change is coming, so we&rsquo;re not taking table bookings next week, Wednesday 4
+          to Sunday 8 November. You can still book for today. Thank you.
         </p>
 
         <p className="notice-body" style={{ color: "var(--gold)", fontStyle: "italic" }}>
-          Happy Feast to Everybody!
+          Watch this space.
         </p>
 
         <button
